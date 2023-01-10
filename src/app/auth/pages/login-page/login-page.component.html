@@ -18,7 +18,7 @@
       </form>
     </mat-card-content>
     <mat-card-actions class="flex justify-content-end">
-      <button [disabled]="loading" mat-flat-button color="primary" (click)="login()">{{ loading ? 'Iniciando sesión' : 'Ingresar' }}</button>
+      <button id="login-submit-button" [disabled]="loading || form.invalid" mat-flat-button color="primary" (click)="login()">{{ loading ? 'Iniciando sesión' : 'Ingresar' }}</button>
     </mat-card-actions>
   </mat-card>
 </main>

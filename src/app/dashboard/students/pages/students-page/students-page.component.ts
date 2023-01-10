@@ -14,7 +14,7 @@ export class StudentsPageComponent implements OnDestroy {
   students: Observable<Student[]>;
   private destroyed$ = new Subject()
 
-  constructor(private readonly studentsService: StudentsService, private readonly dialogService: MatDialog) {
+  constructor(private readonly studentsService: StudentsService, public readonly dialogService: MatDialog) {
     this.students = this.studentsService.students$;
   }
 
