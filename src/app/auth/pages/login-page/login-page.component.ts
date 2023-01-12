@@ -18,9 +18,9 @@ export class LoginPageComponent implements OnDestroy {
   private destroyed$ = new Subject();
 
   constructor(
-    private readonly authService: AuthService,
-    private readonly sessionService: SessionService,
-    private readonly router: Router,
+    public readonly authService: AuthService,
+    public readonly sessionService: SessionService,
+    public readonly router: Router,
   ) {
     this.sessionService.user$.pipe(takeUntil(this.destroyed$)).subscribe((user) => {
       if (user) this.router.navigate(['dashboard', 'students'])
@@ -32,10 +32,12 @@ export class LoginPageComponent implements OnDestroy {
   }
 
   login() {
-    this.loading = true
-    this.authService.login({
-      email: this.form.get('email')?.value || '',
-      password: this.form.get('password')?.value || ''
-    }).subscribe(() => this.loading = false)
+    if (this.form.valid) {
+      this.loading = true
+      this.authService.login({
+        email: this.form.get('email')?.value || '',
+        password: this.form.get('password')?.value || ''
+      }).subscribe(() => this.loading = false)
+    }
   }
 }
