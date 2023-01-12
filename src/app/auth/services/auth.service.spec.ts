@@ -38,7 +38,7 @@ fdescribe('AuthService', () => {
       password: '123456',
     }).subscribe((res) => {
       expect(res).toEqual(mockUser)
-      done();
+      done(); // SE LLAMA PARA ESCUCHAR LAS ASINCRONIAS 
     });
     httpController.expectOne({
       method: 'POST',
