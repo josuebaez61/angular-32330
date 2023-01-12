@@ -6,14 +6,19 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 
-describe('LoginPageComponent', () => {
+fdescribe('LoginPageComponent', () => {
   let component: LoginPageComponent;
   let fixture: ComponentFixture<LoginPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoginPageComponent],
-      imports: [HttpClientTestingModule, SharedModule, ReactiveFormsModule, BrowserAnimationsModule],
+      imports: [
+        BrowserAnimationsModule,
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+        SharedModule,
+      ],
       providers: [AuthService]
     })
     .compileComponents();
@@ -52,5 +57,9 @@ describe('LoginPageComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     const btn = compiled.querySelector('#login-submit-button') as HTMLButtonElement;
     expect(btn.disabled).toBe(true);
+  })
+
+  it('login should work', () => {
+    component.login()
   })
 });
