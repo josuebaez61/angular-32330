@@ -1,5 +1,6 @@
 import { BehaviorSubject, take } from 'rxjs';
 import { Product } from '../core/models';
+import { CreateProductData, IProductsService } from '../dashboard/products/services/products.service';
 
 const FAKE_PRODUCTS: Product[] = [
   {
@@ -16,7 +17,7 @@ const FAKE_PRODUCTS: Product[] = [
   }
 ]
 
-export class ProductsServiceMock {
+export class ProductsServiceMock implements IProductsService {
   private products = new BehaviorSubject<Product[]>([]);
   public products$ = this.products.asObservable();
 
@@ -24,7 +25,7 @@ export class ProductsServiceMock {
     this.products.next(FAKE_PRODUCTS)
   }
 
-  createProduct(data: Pick<Product, 'name' | 'description'>) {
+  createProduct(data: CreateProductData) {
     this.products$.pipe(take(1)).subscribe(
       (products) => {
         const lastId = parseInt(products[products.length - 1]?.id) || 0;

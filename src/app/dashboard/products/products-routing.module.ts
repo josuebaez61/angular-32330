@@ -5,6 +5,7 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 
 const routes: Routes = [
   {
+    // dashboard/products...
     path: '',
     component: ProductsPageComponent,
   }

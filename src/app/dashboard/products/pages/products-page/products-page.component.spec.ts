@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductsPageComponent } from './products-page.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ProductsService } from '../../services/products.service';
+import { CreateProductData, ProductsService } from '../../services/products.service';
 import { ProductsServiceMock } from 'src/app/mocks/products.service.mock';
 
 fdescribe('ProductsPageComponent', () => {
@@ -47,7 +47,7 @@ fdescribe('ProductsPageComponent', () => {
   });
 
   it('Debe agregar correctamente un usuario', () => {
-    const testingProductData = {
+    const testingProductData: CreateProductData = {
       name: 'TEST NAME',
       description: 'TEST DESCRIPTION',
     };

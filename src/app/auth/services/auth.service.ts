@@ -21,7 +21,7 @@ export class AuthService {
     return this.httpClient
       .post<LoginSuccessful>(`${this.apiUrl}/login`, data)
       .pipe(
-        tap((data) => localStorage.setItem('token', data.token)),
+        tap(({ token }) => localStorage.setItem('token', token)),
         mergeMap(() =>
           this.httpClient.get<SingleUserResponse>(`${this.apiUrl}/users/7`)
         ),

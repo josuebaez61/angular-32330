@@ -3,10 +3,16 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, mergeMap, take, tap } from 'rxjs';
 import { Product } from 'src/app/core/models';
 
+export type CreateProductData = Pick<Product, 'name' | 'description'>;
+export interface IProductsService {
+  readonly products$: Observable<Product[]>;
+  loadProducts(): void;
+  createProduct(data: CreateProductData): void;
+}
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsService {
+export class ProductsService implements IProductsService {
   private readonly baseUrl = 'https://63b738094d97e82aa3b78a1a.mockapi.io';
   private readonly products = new BehaviorSubject<Product[]>([])
   public readonly products$: Observable<Product[]>;
@@ -19,7 +25,7 @@ export class ProductsService {
       .subscribe((products) => this.products.next(products));
   }
 
-  createProduct(data: Pick<Product, 'name' | 'description'>) {
+  createProduct(data: CreateProductData) {
     this.products$
       .pipe(
         take(1),
