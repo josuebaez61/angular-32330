@@ -1,18 +1,7 @@
 <mat-drawer-container class="dashboard-container" autosize>
   <!-- SIDEBAR -->
   <mat-drawer [opened]="true" #drawer class="sidenav" mode="side">
-    <p>My APP</p>
-    <ul>
-      <li>
-        <a routerLink="students">Estudiantes</a>
-      </li>
-      <li>
-        <a routerLink="courses">Cursos</a>
-      </li>
-      <li>
-        <a routerLink="commissions">Comisiones</a>
-      </li>
-    </ul>
+    <app-nav-menu></app-nav-menu>
   </mat-drawer>
   <!-- HEADER TOOLBAR -->
   <app-header (toggleSidebar)="drawer.toggle()"></app-header>
