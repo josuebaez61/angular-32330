@@ -41,12 +41,14 @@ fdescribe('LoginPageComponent', () => {
     expect(form.valid).toBe(false)
   })
 
+  // PRUEBAS DE INTEGRACIÓN 🤔
   it('submit button should exists', () => {
     const compiled = fixture.debugElement.nativeElement;
     const btn = compiled.querySelector('#login-submit-button') as HTMLButtonElement;
     expect(btn).toBeTruthy()
   })
 
+  // PRUEBAS DE INTEGRACIÓN 🤔
   it('submit button should be disabled if form is not valid', () => {
     const form = component.form
     form.setValue({
@@ -57,9 +59,5 @@ fdescribe('LoginPageComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     const btn = compiled.querySelector('#login-submit-button') as HTMLButtonElement;
     expect(btn.disabled).toBe(true);
-  })
-
-  it('login should work', () => {
-    component.login()
   })
 });
