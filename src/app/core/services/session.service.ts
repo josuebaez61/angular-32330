@@ -17,6 +17,7 @@ export class SessionService {
   }
 
   updateSessionUser(data: Partial<User>) {
+    const lsRole = localStorage.getItem('token');
     this.user$.pipe(take(1)).subscribe((user) => {
       if (user) {
         this.setUser(
@@ -26,6 +27,7 @@ export class SessionService {
             data.first_name || user.first_name,
             data.last_name || user.last_name,
             data.avatar || user.avatar,
+            lsRole!
           )
         )
       }

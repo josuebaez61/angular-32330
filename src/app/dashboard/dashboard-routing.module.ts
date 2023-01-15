@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
+import { AdminRoleGuard } from '../auth/guards/admin-role.guard';
 
 const routes: Routes = [
   {
@@ -12,7 +13,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: 'home',
+        loadChildren: () => import('./home/home.module').then((module) => module.HomeModule)
+      },
+      {
         path: 'students',
+        canActivate: [AdminRoleGuard],
         loadChildren: () => import('./students/students.module').then((module) => module.StudentsModule)
       },
       {

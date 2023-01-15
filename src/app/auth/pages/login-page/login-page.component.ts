@@ -14,6 +14,7 @@ export class LoginPageComponent implements OnDestroy {
   public form = new FormGroup({
     email: new FormControl('michael.lawson@reqres.in', [Validators.required]),
     password: new FormControl('cityslicka', [Validators.required]),
+    role: new FormControl('student', [Validators.required])
   })
   private destroyed$ = new Subject();
 
@@ -32,10 +33,11 @@ export class LoginPageComponent implements OnDestroy {
       this.loading = true
       this.authService.login({
         email: this.form.get('email')?.value || '',
-        password: this.form.get('password')?.value || ''
+        password: this.form.get('password')?.value || '',
+        role: this.form.get('role')?.value || '',
       }).subscribe((user) => {
         this.loading = false;
-        if (user) this.router.navigate(['dashboard', 'students'])
+        if (user) this.router.navigate(['dashboard', 'home'])
       })
     }
   }

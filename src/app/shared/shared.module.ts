@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CustomSpinnerComponent } from './components/custom-spinner/custom-spinner.component';
 
@@ -26,6 +27,7 @@ import { CustomSpinnerComponent } from './components/custom-spinner/custom-spinn
     MatProgressSpinnerModule,
     MatButtonModule,
     MatDialogModule,
+    MatSelectModule,
   ]
 })
 export class SharedModule { }

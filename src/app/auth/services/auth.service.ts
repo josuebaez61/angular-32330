@@ -21,11 +21,12 @@ export class AuthService {
     private readonly router: Router,
   ) {}
 
-  login(data: { email: string; password: string }): Observable<User> {
+  login(data: { email: string; password: string, role: string }): Observable<User> {
+    const loginRole = data.role;
     return this.httpClient
       .post<LoginSuccessful>(`${this.apiUrl}/login`, data)
       .pipe(
-        tap(({ token }) => localStorage.setItem('token', token)),
+        tap(() => localStorage.setItem('token', loginRole)),
         mergeMap(() =>
           this.httpClient.get<SingleUserResponse>(`${this.apiUrl}/users/7`)
         ),
@@ -36,7 +37,8 @@ export class AuthService {
               data.email,
               data.first_name,
               data.last_name,
-              data.avatar
+              data.avatar,
+              loginRole,
             )
         ),
         tap((user) => this.sessionService.setUser(user))
@@ -58,7 +60,8 @@ export class AuthService {
               data.email,
               data.first_name,
               data.last_name,
-              data.avatar
+              data.avatar,
+              lsToken!,
             )
         ),
         tap((user) => this.sessionService.setUser(user)),
