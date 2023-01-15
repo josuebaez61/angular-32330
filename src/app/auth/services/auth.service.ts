@@ -44,12 +44,13 @@ export class AuthService {
   }
 
   verifyToken(): Observable<boolean> {
-    const token = localStorage.getItem('token');
-    return this.httpClient.get<SingleUserResponse>(`${this.apiUrl}/users/7`)
+    const lsToken = localStorage.getItem('token');
+    return of(lsToken)
       .pipe(
-        tap(() => {
+        tap((token) => {
           if (!token) throw Error('Invalid token')
         }),
+        mergeMap(() => this.httpClient.get<SingleUserResponse>(`${this.apiUrl}/users/7`)),
         map(
           ({ data }) =>
             new User(
