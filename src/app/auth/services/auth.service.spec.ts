@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { SessionService } from 'src/app/core/services/session.service';
 import { User } from 'src/app/models/user.model';
+import { SingleUserResponse } from 'src/app/models/reqres.interfaces';
 
 const mockUser: User = new User(
   7,
@@ -12,6 +13,20 @@ const mockUser: User = new User(
   'Lawson',
   'https://reqres.in/img/faces/7-image.jpg'
 );
+
+const mockSingleUserResponse: SingleUserResponse = {
+  data: {
+    id: 7,
+    email: 'michael.lawson@reqres.in',
+    first_name: 'Michael',
+    last_name: 'Lawson',
+    avatar: 'https://reqres.in/img/faces/7-image.jpg'
+  },
+  support: {
+      url: 'https://reqres.in/#support-heading',
+      text: 'To keep ReqRes free, contributions towards server costs are appreciated!'
+  }
+}
 
 fdescribe('AuthService', () => {
   let service: AuthService;
@@ -38,7 +53,7 @@ fdescribe('AuthService', () => {
       password: '123456',
     }).subscribe((res) => {
       expect(res).toEqual(mockUser)
-      done(); // SE LLAMA PARA ESCUCHAR LAS ASINCRONIAS 
+      done(); // SE LLAMA PARA ESCUCHAR LAS ASINCRONIAS
     });
     httpController.expectOne({
       method: 'POST',
@@ -49,18 +64,6 @@ fdescribe('AuthService', () => {
     httpController.expectOne({
       method: 'GET',
       url: 'https://reqres.in/api/users/7'
-    }).flush({
-      data: {
-        id: 7,
-        email: 'michael.lawson@reqres.in',
-        first_name: 'Michael',
-        last_name: 'Lawson',
-        avatar: 'https://reqres.in/img/faces/7-image.jpg'
-      },
-      support: {
-          url: 'https://reqres.in/#support-heading',
-          text: 'To keep ReqRes free, contributions towards server costs are appreciated!'
-      }
-    })
+    }).flush(mockSingleUserResponse)
   });
 });
