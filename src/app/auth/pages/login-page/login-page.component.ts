@@ -21,11 +21,7 @@ export class LoginPageComponent implements OnDestroy {
     public readonly authService: AuthService,
     public readonly sessionService: SessionService,
     public readonly router: Router,
-  ) {
-    this.sessionService.user$.pipe(takeUntil(this.destroyed$)).subscribe((user) => {
-      if (user) this.router.navigate(['dashboard', 'students'])
-    });
-  }
+  ) {}
 
   ngOnDestroy(): void {
     this.destroyed$.next(true)
@@ -37,7 +33,10 @@ export class LoginPageComponent implements OnDestroy {
       this.authService.login({
         email: this.form.get('email')?.value || '',
         password: this.form.get('password')?.value || ''
-      }).subscribe(() => this.loading = false)
+      }).subscribe((user) => {
+        this.loading = false;
+        if (user) this.router.navigate(['dashboard', 'students'])
+      })
     }
   }
 }
