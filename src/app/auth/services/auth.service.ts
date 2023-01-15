@@ -48,7 +48,7 @@ export class AuthService {
     return of(lsToken)
       .pipe(
         tap((token) => {
-          if (!token) throw Error('Invalid token')
+          if (!token) throw new Error('Invalid token');
         }),
         mergeMap(() => this.httpClient.get<SingleUserResponse>(`${this.apiUrl}/users/7`)),
         map(
