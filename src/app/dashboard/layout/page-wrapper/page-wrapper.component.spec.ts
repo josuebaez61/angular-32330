@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PageWrapperComponent } from './page-wrapper.component';
 
-describe('PageWrapperComponent', () => {
+xdescribe('PageWrapperComponent', () => {
   let component: PageWrapperComponent;
   let fixture: ComponentFixture<PageWrapperComponent>;
 

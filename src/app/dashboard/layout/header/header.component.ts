@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { SessionService } from 'src/app/core/services/session.service';
 import { User } from 'src/app/models/user.model';
 
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnDestroy {
   @Output() toggleSidebar = new EventEmitter()
   public user: User | null = null;
   private destroyed$ = new Subject();
-  constructor(private readonly sessionService: SessionService) {
+  constructor(private readonly sessionService: SessionService, public readonly authService: AuthService) {
     this.sessionService.user$
       .pipe(takeUntil(this.destroyed$))
       .subscribe((user) => {

@@ -11,7 +11,7 @@ import { CustomSpinnerComponent } from './components/custom-spinner/custom-spinn
 
 @NgModule({
   declarations: [
-    CustomSpinnerComponent
+    CustomSpinnerComponent,
   ],
   imports: [
     CommonModule,

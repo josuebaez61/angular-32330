@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { SessionService } from 'src/app/core/services/session.service';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 @Component({
@@ -19,13 +18,8 @@ export class LoginPageComponent implements OnDestroy {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly sessionService: SessionService,
     private readonly router: Router,
-  ) {
-    this.sessionService.user$.pipe(takeUntil(this.destroyed$)).subscribe((user) => {
-      if (user) this.router.navigate(['dashboard', 'students'])
-    });
-  }
+  ) {}
 
   ngOnDestroy(): void {
     this.destroyed$.next(true)
@@ -36,6 +30,11 @@ export class LoginPageComponent implements OnDestroy {
     this.authService.login({
       email: this.form.get('email')?.value || '',
       password: this.form.get('password')?.value || ''
-    }).subscribe(() => this.loading = false)
+    }).subscribe((user) => {
+      this.loading = false
+      if (user) {
+        this.router.navigate(['dashboard', 'students'])
+      }
+    })
   }
 }

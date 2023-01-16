@@ -12,7 +12,7 @@ export class SessionService {
 
   constructor() {}
 
-  setUser(user: User): void {
+  setUser(user: User | null): void {
     this.user.next(user);
   }
 

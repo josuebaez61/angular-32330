@@ -17,6 +17,7 @@
   <b style="cursor: pointer;" *ngIf="user;else templateName" routerLink="my-profile">
     AUTENTICADO: {{ user.fullName }}
   </b>
+  <button (click)="authService.logOut()" color="warn" mat-flat-button>Cerrar sesión</button>
   <ng-template #templateName>
     <button routerLink="/auth/login" mat-flat-button color="primary">Iniciar sesión</button>
   </ng-template>
