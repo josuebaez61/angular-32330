@@ -8,7 +8,9 @@ import {
 } from 'src/app/models/reqres.interfaces';
 import { User } from 'src/app/models/user.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
   apiUrl = 'https://reqres.in/api';
 
