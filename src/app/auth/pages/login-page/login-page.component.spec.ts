@@ -37,7 +37,8 @@ describe('LoginPageComponent', () => {
               'fake@email.com',
               'fakeName',
               'fakeLastName',
-              'fakeAvatar'
+              'fakeAvatar',
+              'admin'
             )
           ).pipe(
             tap((user) => TestBed.inject(SessionService).setUser(user))
@@ -62,7 +63,8 @@ describe('LoginPageComponent', () => {
     const form = component.form
     form.setValue({
       email: '',
-      password: ''
+      password: '',
+      role: 'admin',
     });
     expect(form.valid).toBe(false)
   })
@@ -71,7 +73,8 @@ describe('LoginPageComponent', () => {
     const form = component.form
     form.setValue({
       email: 'test@email.com',
-      password: '123456'
+      password: '123456',
+      role: ''
     });
     component.login();
     expect(loginSpy).toHaveBeenCalled()
@@ -81,7 +84,8 @@ describe('LoginPageComponent', () => {
     const form = component.form
     form.setValue({
       email: '',
-      password: ''
+      password: '',
+      role: ''
     });
     component.login();
     expect(form.invalid).toBeTrue();
@@ -107,7 +111,8 @@ describe('LoginPageComponent', () => {
     const form = component.form
     form.setValue({
       email: '',
-      password: ''
+      password: '',
+      role: ''
     });
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;

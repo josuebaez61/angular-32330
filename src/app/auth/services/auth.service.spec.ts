@@ -11,7 +11,8 @@ const mockUser: User = new User(
   'michael.lawson@reqres.in',
   'Michael',
   'Lawson',
-  'https://reqres.in/img/faces/7-image.jpg'
+  'https://reqres.in/img/faces/7-image.jpg',
+  'admin',
 );
 
 const mockSingleUserResponse: SingleUserResponse = {
@@ -51,6 +52,7 @@ fdescribe('AuthService', () => {
     service.login({
       email: mockUser.email,
       password: '123456',
+      role: 'admin'
     }).subscribe((res) => {
       expect(res).toEqual(mockUser)
       done(); // SE LLAMA PARA ESCUCHAR LAS ASINCRONIAS
