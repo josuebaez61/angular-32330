@@ -13,7 +13,11 @@ export class HeaderComponent implements OnDestroy {
   @Output() toggleSidebar = new EventEmitter()
   public user: User | null = null;
   private destroyed$ = new Subject();
-  constructor(private readonly sessionService: SessionService, public readonly authService: AuthService) {
+  constructor(
+    private readonly sessionService: SessionService,
+    public readonly authService: AuthService,
+    
+  ) {
     this.sessionService.user$
       .pipe(takeUntil(this.destroyed$))
       .subscribe((user) => {
