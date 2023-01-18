@@ -1,8 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import { SessionService } from 'src/app/core/services/session.service';
 import { User } from 'src/app/models/user.model';
+import { AppState } from 'src/app/store/app.reducer';
+import { updateAuthenticatedUser } from 'src/app/store/auth/auth.actions';
+import { authenticatedUserSelector } from 'src/app/store/auth/auth.selectors';
 
 @Component({
   selector: 'app-my-profile',
@@ -16,13 +19,16 @@ export class MyProfileComponent implements OnDestroy {
   })
   user: User | null = null;
   private destroyed$ = new Subject();
-  constructor(public readonly sessionService: SessionService) {
-    this.sessionService.user$
+  constructor(private readonly store: Store<AppState>) {
+    this.store.select(authenticatedUserSelector)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((user) => {
         if (user) {
-          this.user = user
-          this.form.patchValue(user);
+          this.user = user;
+          this.form.patchValue({
+            first_name: user.first_name,
+            last_name: user.last_name,
+          })
         }
       })
   }
@@ -33,7 +39,10 @@ export class MyProfileComponent implements OnDestroy {
 
   onSubmit() {
     if (this.user) {
-      this.sessionService.updateSessionUser(this.form.value)
+      this.store.dispatch(updateAuthenticatedUser({
+        first_name: this.form.get('first_name')?.value || '',
+        last_name: this.form.get('last_name')?.value || '',
+      }))
     }
   }
 }

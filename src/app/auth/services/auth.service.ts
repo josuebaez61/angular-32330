@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable, catchError, map, mergeMap, of, tap } from 'rxjs';
-import { SessionService } from 'src/app/core/services/session.service';
 import {
   LoginSuccessful,
   SingleUserResponse,
 } from 'src/app/models/reqres.interfaces';
 import { User } from 'src/app/models/user.model';
+import { AppState } from 'src/app/store/app.reducer';
+import { setAuthenticatedUser, unsetAuthenticatedUser } from 'src/app/store/auth/auth.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class AuthService {
 
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly sessionService: SessionService,
+    private readonly store: Store<AppState>,
     private readonly router: Router,
   ) {}
 
@@ -39,13 +41,20 @@ export class AuthService {
               data.avatar
             )
         ),
-        tap((user) => this.sessionService.setUser(user))
+        // tap((user) => this.sessionService.setUser(user))
+        tap(
+          (user) => this.store.dispatch(
+            setAuthenticatedUser({
+              authenticatedUser: user
+            })
+          )
+        )
       );
   }
 
   logOut() {
     localStorage.removeItem('token');
-    this.sessionService.setUser(null);
+    this.store.dispatch(unsetAuthenticatedUser());
     this.router.navigate(['auth', 'login']);
   }
 
@@ -61,14 +70,16 @@ export class AuthService {
           this.httpClient.get<SingleUserResponse>(`${this.apiUrl}/users/7`)
         ),
         tap(({ data }) => 
-          this.sessionService.setUser(
-            new User(
-              data.id,
-              data.email,
-              data.first_name,
-              data.last_name,
-              data.avatar
-            )
+          this.store.dispatch(
+            setAuthenticatedUser({
+              authenticatedUser: new User(
+                data.id,
+                data.email,
+                data.first_name,
+                data.last_name,
+                data.avatar
+              ) 
+            })
           )
         ),
         map((user) => !!user),

@@ -14,8 +14,8 @@
   <button type="button" mat-icon-button (click)="toggleSidebar.emit()">
     <mat-icon>menu</mat-icon>
   </button>
-  <b style="cursor: pointer;" *ngIf="user;else templateName" routerLink="my-profile">
-    AUTENTICADO: {{ user.fullName }}
+  <b style="cursor: pointer;" *ngIf="user | async;else templateName" routerLink="my-profile">
+    AUTENTICADO: {{ (user | async)?.fullName }}
   </b>
   <button (click)="authService.logOut()" color="warn" mat-flat-button>Cerrar sesión</button>
   <ng-template #templateName>
