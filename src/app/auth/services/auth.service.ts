@@ -8,8 +8,8 @@ import {
   SingleUserResponse,
 } from 'src/app/models/reqres.interfaces';
 import { User } from 'src/app/models/user.model';
-import { AppState } from 'src/app/store/app.reducer';
-import { setAuthenticatedUser, unsetAuthenticatedUser } from 'src/app/store/auth/auth.actions';
+import { setAuthenticatedUser, unsetAuthenticatedUser } from 'src/app/auth/store/auth.actions';
+import { AppState } from 'src/app/core/models/app-state.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,10 +66,10 @@ export class AuthService {
         tap((token) => {
           if (!token) throw new Error('Token invalido')
         }),
-        mergeMap((token) => 
+        mergeMap((token) =>
           this.httpClient.get<SingleUserResponse>(`${this.apiUrl}/users/7`)
         ),
-        tap(({ data }) => 
+        tap(({ data }) =>
           this.store.dispatch(
             setAuthenticatedUser({
               authenticatedUser: new User(
@@ -78,7 +78,7 @@ export class AuthService {
                 data.first_name,
                 data.last_name,
                 data.avatar
-              ) 
+              )
             })
           )
         ),

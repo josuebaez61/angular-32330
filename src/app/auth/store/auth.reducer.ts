@@ -2,6 +2,8 @@ import { createReducer, on } from "@ngrx/store";
 import { User } from "src/app/models/user.model";
 import { setAuthenticatedUser, unsetAuthenticatedUser, updateAuthenticatedUser } from "./auth.actions";
 
+export const authFeatureKey = 'auth'
+
 export interface AuthState {
     authenticatedUser: User | null;
 }

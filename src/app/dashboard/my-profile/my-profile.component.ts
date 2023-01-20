@@ -3,9 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.model';
-import { AppState } from 'src/app/store/app.reducer';
-import { updateAuthenticatedUser } from 'src/app/store/auth/auth.actions';
-import { authenticatedUserSelector } from 'src/app/store/auth/auth.selectors';
+import { updateAuthenticatedUser } from 'src/app/auth/store/auth.actions';
+import { authenticatedUserSelector } from 'src/app/auth/store/auth.selectors';
+import { AppState } from 'src/app/core/models/app-state.model';
 
 @Component({
   selector: 'app-my-profile',

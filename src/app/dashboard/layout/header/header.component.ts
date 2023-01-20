@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/models/user.model';
-import { AppState } from 'src/app/store/app.reducer';
-import { authenticatedUserSelector } from 'src/app/store/auth/auth.selectors';
+import { authenticatedUserSelector } from 'src/app/auth/store/auth.selectors';
+import { AppState } from 'src/app/core/models/app-state.model';
 
 @Component({
   selector: 'app-header',
