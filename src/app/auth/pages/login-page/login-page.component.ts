@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnDestroy {
+export class LoginPageComponent implements OnInit, OnDestroy {
   public loading = false
   public form = new FormGroup({
     email: new FormControl('michael.lawson@reqres.in', [Validators.required]),
@@ -21,6 +21,16 @@ export class LoginPageComponent implements OnDestroy {
     private readonly router: Router,
   ) {}
 
+  ngOnInit(): void {
+    this.authService.isAuthenticated$
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((value) => {
+        if (value) {
+          this.router.navigate(['dashboard', 'students']);
+        }
+      });
+  }
+
   ngOnDestroy(): void {
     this.destroyed$.next(true)
   }
@@ -30,11 +40,15 @@ export class LoginPageComponent implements OnDestroy {
     this.authService.login({
       email: this.form.get('email')?.value || '',
       password: this.form.get('password')?.value || ''
-    }).subscribe((user) => {
-      this.loading = false
-      if (user) {
-        this.router.navigate(['dashboard', 'students'])
-      }
     })
+    // this.authService.login({
+    //   email: this.form.get('email')?.value || '',
+    //   password: this.form.get('password')?.value || ''
+    // }).subscribe((user) => {
+    //   this.loading = false
+    //   if (user) {
+    //     this.router.navigate(['dashboard', 'students'])
+    //   }
+    // })
   }
 }
