@@ -8,32 +8,16 @@ import { Subject, filter, take, takeUntil } from 'rxjs';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnInit, OnDestroy {
+export class LoginPageComponent {
   public loading = false
   public form = new FormGroup({
     email: new FormControl('michael.lawson@reqres.in', [Validators.required]),
     password: new FormControl('cityslicka', [Validators.required]),
   })
-  private destroyed$ = new Subject();
-
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router,
   ) {}
-
-  ngOnInit(): void {
-    // this.authService.isAuthenticated$
-    //   .pipe(takeUntil(this.destroyed$))
-    //   .subscribe((value) => {
-    //     if (value) {
-    //       this.router.navigate(['dashboard', 'students']);
-    //     }
-    //   });
-  }
-
-  ngOnDestroy(): void {
-    this.destroyed$.next(true)
-  }
 
   login() {
     this.loading = true
@@ -45,20 +29,10 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.authService.isAuthenticated$
       .pipe(filter((value) => value))
       .pipe(take(1))
-      // .pipe(takeUntil(this.destroyed$))
       .subscribe((value) => {
         if (value) {
           this.router.navigate(['dashboard', 'students']);
         }
       });
-    // this.authService.login({
-    //   email: this.form.get('email')?.value || '',
-    //   password: this.form.get('password')?.value || ''
-    // }).subscribe((user) => {
-    //   this.loading = false
-    //   if (user) {
-    //     this.router.navigate(['dashboard', 'students'])
-    //   }
-    // })
   }
 }
