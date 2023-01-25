@@ -11,3 +11,8 @@ export const selectIsAuthenticated = createSelector(
   authStateSelector,
   (state) => !!state.authenticatedUser
 );
+
+export const selectLoggingIn = createSelector(
+  authStateSelector,
+  (state) => state.loggingIn
+)

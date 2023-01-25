@@ -9,6 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppStoreModule } from './app-store.module';
 import { EffectsModule } from '@ngrx/effects';
+import { CoursesModule } from './dashboard/courses/courses.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { EffectsModule } from '@ngrx/effects';
     HttpClientModule,
     BrowserAnimationsModule,
     AppStoreModule,
+    CoursesModule,
     EffectsModule.forRoot([]),
   ],
   providers: [],

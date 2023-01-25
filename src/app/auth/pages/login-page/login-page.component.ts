@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, filter, take, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -22,13 +22,13 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.authService.isAuthenticated$
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe((value) => {
-        if (value) {
-          this.router.navigate(['dashboard', 'students']);
-        }
-      });
+    // this.authService.isAuthenticated$
+    //   .pipe(takeUntil(this.destroyed$))
+    //   .subscribe((value) => {
+    //     if (value) {
+    //       this.router.navigate(['dashboard', 'students']);
+    //     }
+    //   });
   }
 
   ngOnDestroy(): void {
@@ -41,6 +41,16 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       email: this.form.get('email')?.value || '',
       password: this.form.get('password')?.value || ''
     })
+    this.router.navigate(['dashboard', 'students'])
+    this.authService.isAuthenticated$
+      .pipe(filter((value) => value))
+      .pipe(take(1))
+      // .pipe(takeUntil(this.destroyed$))
+      .subscribe((value) => {
+        if (value) {
+          this.router.navigate(['dashboard', 'students']);
+        }
+      });
     // this.authService.login({
     //   email: this.form.get('email')?.value || '',
     //   password: this.form.get('password')?.value || ''

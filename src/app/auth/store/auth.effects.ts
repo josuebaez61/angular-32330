@@ -8,8 +8,7 @@ import { LoginSuccessful, SingleUserResponse } from 'src/app/models/reqres.inter
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, concatMap, map, mergeMap, of, tap, throwError } from 'rxjs';
 import { User } from 'src/app/models/user.model';
-import { AppState } from 'src/app/core/models/app-state.model';
-import { Store } from '@ngrx/store';
+
 //import all requried services or any dependencies
 
 // SNIPPET hardikpthv.NgRxSnippets
